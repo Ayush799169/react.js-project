@@ -1,0 +1,27 @@
+
+import { useState, useEffect } from "react";
+
+function useFetch(url) {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    
+    fetch(url)
+      .then((response) => response.json())
+      .then((result) => {
+        setData(result);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Something went wrong");
+        setLoading(false);
+      });
+  }, [url]);
+
+  return { data, loading, error };
+}
+
+export default useFetch;
